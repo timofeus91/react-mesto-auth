@@ -1,0 +1,9 @@
+
+.elements__container {
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
