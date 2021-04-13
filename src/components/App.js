@@ -10,6 +10,10 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
 
 
 
