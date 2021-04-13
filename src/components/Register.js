@@ -23,25 +23,22 @@ function Register(props) {
         e.preventDefault();
 
         // Передаём значения управляемых компонентов во внешний обработчик
-        props.onData({
-            email: email,
-            password: password
-        })
+        props.onData(email, password)
     }
 
 
     return(
-        <div className="userData-container">
-            <h2 className="userData-container__title">Регистрация</h2>
-            <form className="userData-container__form" onSubmit={handleSubmit} name="userData" noValidate>
+        <div className="user-data-container">
+            <h2 className="user-data-container__title">Регистрация</h2>
+            <form className="user-data-container__form" onSubmit={handleSubmit} name="user-data" noValidate>
 
-                <input value={email} onChange={handleChangeEmail} type="email" className="userData-container__input userData-container_topform" name="userData-name" placeholder="Email" required minLength='2' maxLength='40' id="userData-name"/>
-                <span className="userData-container__span" id="userData-name-error"></span>
+                <input value={email} onChange={handleChangeEmail} type="email" className="user-data-container__input user-data-container_topform" name="user-data-name" placeholder="Email" required minLength='2' maxLength='40' id="user-data-name"/>
+                <span className="user-data-container__span" id="user-data-name-error"></span>
 
-                <input value={password} onChange={handleChangePassword}  type="password" className="userData-container__input userData-container_bottomform" name="userData-password" placeholder="Пароль" required minLength='2' maxLength='200' id="userData-password"/>
-                <span className="userData-container__span" id="userData-password-error"></span>
+                <input value={password} onChange={handleChangePassword}  type="password" className="user-data-container__input user-data-container_bottomform" name="user-data-password" placeholder="Пароль" required minLength='2' maxLength='200' id="user-data-password"/>
+                <span className="user-data-container__span" id="user-data-password-error"></span>
 
-                <button className="userData-container__button" type='submit'>Войти</button>
+                <button className="user-data-container__button" type='submit'>Войти</button>
             </form>
             <Link  to="./sign-in">Уже зарегистрированы? Войти</Link>
         </div>

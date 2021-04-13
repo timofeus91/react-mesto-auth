@@ -29,7 +29,7 @@ function EditAvatarPopup(props) {
             >
                 
                 <input ref={avatarRef} type="url" className="popup__input popup__input_topform popup__input_new-avatar" name="new-avatar-photo" placeholder="Ссылка на картинку" required id="new-avatar"/>
-                <span className='popup__span' id="new-avatar-error"></span>
+                <span className='popup__span' id="new-avatar-error span_all-error"></span>
                 <button className="popup__button popup__button_new-avatar" type='submit'>Сохранить</button>
                 
             </PopupWithForm>
