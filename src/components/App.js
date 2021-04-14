@@ -22,6 +22,7 @@ import * as auth from '../utils/auth';
 
 
 function App() {
+    //стейт переменные, history
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -34,6 +35,10 @@ function App() {
         avatar: 'https://i007.fotocdn.net/s124/4a5340ffd4d2b33c/public_pin_l/2826322361.jpg'
     });
     const [cards, setCards] = React.useState([]);
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+    const [checkRegistration, setCheckRegistration] = React.useState('');
+    const history = useHistory();
 
 
     //Загружаем карточки с сервера. Проставлена зависимость. 
@@ -53,7 +58,6 @@ function App() {
 
     //эффект для получения информации о пользователе
     React.useEffect(() => {
-        handleTokenCheck();
         api.getUserInfo()
         .then(userInfo => {
             setCurrentUser(userInfo);
@@ -62,6 +66,13 @@ function App() {
             console.log(`Произошла ошибка - ${err}`);
         })
     }, []);
+    //эффект для проверки токена при загрузке сайта
+    React.useEffect(() => {
+        handleTokenCheck();
+        /*если ставить зависимость [] чтобы проверялось только при загрузке, то вылетает ошибка:
+        Line 67:8:  React Hook React.useEffect has a missing dependency: 'handleTokenCheck'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+        Разобраться в чем проблема!!! */
+    });
 
     //обработчки для открытия попапов
 
@@ -164,13 +175,8 @@ function App() {
             })
     }
 
-    //сюда все что связано с новый спринтом. Потом раскидать по своим местам
-    const [loggedIn, setLoggedIn] = React.useState(false);
-    const [email, setEmail] = React.useState('');
-    const [checkRegistration, setCheckRegistration] = React.useState('');
-    const history = useHistory();
-
-    //функция по регистрации
+    
+    //обработчик для регистрации
     function handleRegister(data) {
         auth.register(data)
             .then(() => {
@@ -185,7 +191,7 @@ function App() {
             })
     }
 
-    //функция по авторизации 
+    //обработчик для авторизации
     function handleLogin(data) {
         auth.authorize(data)
             .then(res => {
@@ -222,9 +228,12 @@ function App() {
     }
 
 
-    //функция по выходу из аккаунта 
+    //обработчик по выходу из аккаунта
     function handleLogOut() {
-
+        setLoggedIn(false);
+        setEmail('');
+        localStorage.removeItem('jwt');
+        <Redirect to="sign-in" />
     }
 
 
@@ -269,6 +278,7 @@ function App() {
             onClose={closeAllPopups}
             isOpen={isInfoTooltip}
             checkRegistration={checkRegistration}
+            name='registration'
             />
 
             <EditProfilePopup 
