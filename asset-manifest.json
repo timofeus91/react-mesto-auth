@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4c07cfa7.chunk.css",
+    "main.js": "/static/js/main.5c41a21c.chunk.js",
+    "main.js.map": "/static/js/main.5c41a21c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.af504ec3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.af504ec3.js.map",
+    "static/js/2.ebd98fcf.chunk.js": "/static/js/2.ebd98fcf.chunk.js",
+    "static/js/2.ebd98fcf.chunk.js.map": "/static/js/2.ebd98fcf.chunk.js.map",
+    "static/js/3.53a709ef.chunk.js": "/static/js/3.53a709ef.chunk.js",
+    "static/js/3.53a709ef.chunk.js.map": "/static/js/3.53a709ef.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.4c07cfa7.chunk.css.map": "/static/css/main.4c07cfa7.chunk.css.map",
+    "static/js/2.ebd98fcf.chunk.js.LICENSE.txt": "/static/js/2.ebd98fcf.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/avatar-button.ae1a976d.svg",
+    "static/media/Vector-mesto-logo.c2821b38.svg": "/static/media/Vector-mesto-logo.c2821b38.svg",
+    "static/media/popupAccept.a9eb6caf.svg": "/static/media/popupAccept.a9eb6caf.svg",
+    "static/media/popupError.d4ce2a26.svg": "/static/media/popupError.d4ce2a26.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.af504ec3.js",
+    "static/js/2.ebd98fcf.chunk.js",
+    "static/css/main.4c07cfa7.chunk.css",
+    "static/js/main.5c41a21c.chunk.js"
+  ]
+}
