@@ -8,23 +8,27 @@ const checkResponse = (res) => {
 
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
-export const register = (email, password) => {
+export const register = (data) => {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email, password})
+        body: JSON.stringify(
+          {email: data.email, password: data.password}
+          )
       }).then(checkResponse)
 }
 
-export const authorize  = (email, password) => {
+export const authorize  = (data) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email, password})
+        body: JSON.stringify(
+          {email: data.email, password: data.password}
+          )
       }).then(checkResponse)
 }
 

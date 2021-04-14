@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 function Register(props) {
 
     //стейт-переменные для инпутов
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     //обработчики для изменения инпутов и обновления стейтов 
 
@@ -21,13 +21,16 @@ function Register(props) {
     function handleSubmit(e) {
         // Запрещаем браузеру переходить по адресу формы
         e.preventDefault();
-
         // Передаём значения управляемых компонентов во внешний обработчик
-        props.onData(email, password)
+        props.onData({
+            email: email,
+            password: password,
+        });
     }
 
 
     return(
+        (
         <div className="user-data-container">
             <h2 className="user-data-container__title">Регистрация</h2>
             <form className="user-data-container__form" onSubmit={handleSubmit} name="user-data" noValidate>
@@ -38,10 +41,11 @@ function Register(props) {
                 <input value={password} onChange={handleChangePassword}  type="password" className="user-data-container__input user-data-container_bottomform" name="user-data-password" placeholder="Пароль" required minLength='2' maxLength='200' id="user-data-password"/>
                 <span className="user-data-container__span" id="user-data-password-error"></span>
 
-                <button className="user-data-container__button" type='submit'>Войти</button>
+                <button className="user-data-container__button" type='submit'>Зарегистрироваться</button>
             </form>
-            <Link  to="./sign-in">Уже зарегистрированы? Войти</Link>
+            <Link  to="/sign-in">Уже зарегистрированы? Войти</Link>
         </div>
+    )
     )
 }
 

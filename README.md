@@ -1,8 +1,10 @@
 Тут будет текст
 
 !!!Добавить css классы!!!
-popup__user-data-img
-popup__user-data-title
+popup__registration-img
+popup__registration-title
+
+
 
 !!!Возможно добавить классы!!!
 popup_registration

@@ -10,12 +10,14 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import Login from './Login';
-import Register from './Register';
+
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
+import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import Register from './Register';
 import * as auth from '../utils/auth';
+
 
 
 
@@ -23,7 +25,7 @@ function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-    const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+    const [isInfoTooltip, setIsInfoTooltip] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState({name: '', link: '', imgOpen: false});
     const [currentUser, setCurrentUser] = React.useState({
         //пока идет загрузка с сервера чтобы позиции не были пустыми и говорили о выполнении загрузки
@@ -32,21 +34,6 @@ function App() {
         avatar: 'https://i007.fotocdn.net/s124/4a5340ffd4d2b33c/public_pin_l/2826322361.jpg'
     });
     const [cards, setCards] = React.useState([]);
-
-    //стейт-переменная для проверки прошла ли регистрация
-    const [checkRegistration, setCheckRegistration] = React.useState('');
-    //стейт-переменная для проверки залогинен пользователь или нет
-    const [loggedIn, setLoggedIn] = React.useState(false);
-    //подключаем хук history
-    const history = useHistory();
-    //электронная почта пользователя для проверки токена, для выхода.
-    const [email, setEmail] = React.useState('')
-
-    //проверяем токена при загрузке страницы
-    React.useEffect(() => {
-        handleTokenCheck()
-        //ниже проставлена зависимость чтобы проверялось только один раз при загрузке
-    }, []);
 
 
     //Загружаем карточки с сервера. Проставлена зависимость. 
@@ -66,6 +53,7 @@ function App() {
 
     //эффект для получения информации о пользователе
     React.useEffect(() => {
+        handleTokenCheck();
         api.getUserInfo()
         .then(userInfo => {
             setCurrentUser(userInfo);
@@ -75,10 +63,12 @@ function App() {
         })
     }, []);
 
-
-  
-
     //обработчки для открытия попапов
+
+    function handleInfoTooltip() {
+        setIsInfoTooltip(true);
+    }
+
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true);
     }
@@ -92,10 +82,6 @@ function App() {
         setIsAddPlacePopupOpen(true);
     }
 
-    function handleOpenInfoTooltip() {
-        setIsInfoTooltipPopupOpen(true);
-    }
-
 
     //обработчик по закрытию попапов
     function closeAllPopups() {
@@ -103,63 +89,11 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setSelectedCard({name: '', link: '', imgOpen: false});
-        setIsInfoTooltipPopupOpen(false);
     }
 
     //обработчик для открытия большого варианта фото
     function handleCardClick(card) {
         setSelectedCard(card);
-    }
-
-
-
-    //функция по авторизации
-    function handleLogin(email, password) {
-        auth.authorize(email, password)
-            .then(res => {
-                setEmail(email);
-                history.push('/');
-                localStorage.setItem('jwt', res.token);
-                setLoggedIn(true);
-            })
-            .catch((err) => {
-                console.log(`Произошла ошибка - ${err}`);
-                
-            })
-
-    }
-    //функция по регистрации
-    function handleRegister(email, password) {
-        auth.register(email, password)
-        .then(res => {
-            if(res) {
-                handleOpenInfoTooltip();
-                setCheckRegistration(true);
-                history.push('/')
-            }
-        })
-        .catch((err) => {
-            console.log(`Произошла ошибка - ${err}`);
-            handleOpenInfoTooltip();
-            setCheckRegistration(false);
-        })
-    }
-
-
-    //функция по проверке токена
-    function handleTokenCheck() {
-        if(localStorage.getItem("jwt")) {
-            const jwt = localStorage.getItem("jwt");
-            auth.checkToken(jwt)
-                .then(res => {
-                    setLoggedIn(true);
-                    setEmail(res.data.email);
-                    history.push('/')
-                })
-                .catch((err) => {
-                    console.log(`Произошла ошибка - ${err}`);
-                })
-        }
     }
 
     //функция по снятию-постановке лайка на карточку с использованием api
@@ -227,45 +161,114 @@ function App() {
             .catch((err) => {
                 console.log(`Произошла ошибка - ${err}`);
             })
+    }
+
+    //сюда все что связано с новый спринтом. Потом раскидать по своим местам
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+    const [checkRegistration, setCheckRegistration] = React.useState('');
+    const history = useHistory();
+
+    //функция по регистрации
+    function handleRegister(data) {
+        auth.register(data)
+            .then(() => {
+                handleInfoTooltip();
+                setCheckRegistration(true);
+                history.push('/sign-in');
+            })
+            .catch((err) => {
+                console.log(`Произошла ошибка - ${err}`);
+                handleInfoTooltip();
+                setCheckRegistration(false);
+            })
+    }
+
+    //функция по авторизации 
+    function handleLogin(data) {
+        auth.authorize(data)
+            .then(res => {
+                localStorage.setItem('jwt', res.token);
+                setEmail(data.email);
+                setLoggedIn(true);
+                history.push('/');
+            })
+            .catch((err) => {
+                console.log(`Произошла ошибка - ${err}`);
+                handleInfoTooltip();
+                setCheckRegistration(false);
+            })
+    }
+
+    //функция по проверке токена
+    function handleTokenCheck() {
+        if(localStorage.getItem('jwt')) {
+            const token = localStorage.getItem('jwt');
+            if(token) {
+                auth.checkToken(token)
+                    .then(res => {
+                        if(res) {
+                            setLoggedIn(true);
+                            setEmail(res.data.email);
+                            history.push('/');
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(`Произошла ошибка - ${err}`);
+                    })
+            }
+        }
+    }
+
+
+    //функция по выходу из аккаунта 
+    function handleLogOut() {
 
     }
+
+
 
   return (
     <CurrentUserContext.Provider value={ currentUser }>
     <div className="page">
-        <Header />
+        <Header
+        email={email}
+        logOut={handleLogOut}
+         />
 
         <Switch>
-            <ProtectedRoute
-                path="/"
-                loggedIn={loggedIn}
-                component={Main}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-                onCardClick={handleCardClick}
-                cards={cards}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
-            />
+             <ProtectedRoute
+             exact path="/"
+             loggedIn={loggedIn}
+             component={Main}
+             onEditProfile={handleEditProfileClick}
+             onAddPlace={handleAddPlaceClick}
+             onEditAvatar={handleEditAvatarClick}
+             onCardClick={handleCardClick}
+             cards={cards}
+             onCardLike={handleCardLike}
+             onCardDelete={handleCardDelete}
+             />
 
-            <Route>
-            {loggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/>}
-            </Route>
+             <Route path="/sign-up">
+               <Register onData={handleRegister} />
+             </Route>
 
-            <Route path="/sign-in">
-                <Login onData={handleLogin} />
-              </Route>
-
-              <Route path="/sign-up">
-                <Register onData={handleRegister} />
-              </Route>
-
+             <Route path="/sign-in">
+               <Login onData={handleLogin} />
+             </Route>
 
         </Switch>
+
         <Footer />
 
         <section className='popups'>
+
+            <InfoTooltip
+            onClose={closeAllPopups}
+            isOpen={isInfoTooltip}
+            checkRegistration={checkRegistration}
+            />
 
             <EditProfilePopup 
             isOpen={isEditProfilePopupOpen} 
@@ -296,13 +299,6 @@ function App() {
             card={selectedCard}
             
              />
-
-            <InfoTooltip 
-            isOpen={isInfoTooltipPopupOpen}
-            onClose={closeAllPopups}
-            name='_registration'
-            checkRegistration = {checkRegistration}
-            />
             
         </section>
     </div>

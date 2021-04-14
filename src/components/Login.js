@@ -3,8 +3,8 @@ import React from 'react';
 
 function Login(props) {
     //стейт-переменные для инпутов
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     //обработчики для изменения инпутов и обновления стейтов 
 
@@ -20,15 +20,15 @@ function Login(props) {
     function handleSubmit(e) {
         // Запрещаем браузеру переходить по адресу формы
         e.preventDefault();
-
         // Передаём значения управляемых компонентов во внешний обработчик
         props.onData({
             email: email,
-            password: password
-        })
+            password: password,
+        });
     }
 
     return(
+        (
         <div className="user-data-container">
             <h2 className="user-data-container__title">Вход</h2>
             <form className="user-data-container__form" onSubmit={handleSubmit} name="user-data" noValidate>
@@ -42,6 +42,7 @@ function Login(props) {
                 <button className="user-data-container__button" type='submit'>Войти</button>
             </form>
         </div>
+    )
     )
     
 }
