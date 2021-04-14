@@ -29,7 +29,7 @@ function Login(props) {
 
     return(
         (
-        <div className="user-data-container">
+        <div className="user-data-container page__user-data-container">
             <h2 className="user-data-container__title">Вход</h2>
             <form className="user-data-container__form" onSubmit={handleSubmit} name="user-data" noValidate>
 

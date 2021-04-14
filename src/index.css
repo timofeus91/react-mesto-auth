@@ -8,6 +8,7 @@
 @import url('./blocks/page/__footer/page__footer.css');
 @import url('./blocks/page/__header/page__header.css');
 @import url('./blocks/page/__profile/page__profile.css');
+@import url('./blocks/page/__user-data-container/page__user-data-container.css');
 
 @import url('./blocks/header/header.css');
 @import url('./blocks/header/__logo/header__logo.css');
@@ -79,4 +80,6 @@
 @import url('./blocks/user-data-container/__form/user-data-container__form.css');
 @import url('./blocks/user-data-container/__input/user-data-container__input.css');
 @import url('./blocks/user-data-container/__title/user-data-container__title.css');
+@import url('./blocks/user-data-container/__link/user-data-container__link.css');
+
 

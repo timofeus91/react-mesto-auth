@@ -89,6 +89,7 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setSelectedCard({name: '', link: '', imgOpen: false});
+        setIsInfoTooltip(false);
     }
 
     //обработчик для открытия большого варианта фото

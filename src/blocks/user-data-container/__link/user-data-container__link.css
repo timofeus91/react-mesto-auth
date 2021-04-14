@@ -1,0 +1,18 @@
+
+.user-data-container__link{
+    margin: 15px auto 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.user-data-container__link:hover {
+    opacity: 0.8;
+    transition: opacity 0.5s;
+
+}

@@ -10,3 +10,9 @@
     color: rgb(255, 255, 255);
     text-decoration: none;
 }
+
+.header__description:hover {
+    opacity: 0.6;
+    transition: opacity 0.5s;
+
+}

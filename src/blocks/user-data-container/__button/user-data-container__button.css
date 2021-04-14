@@ -1,4 +1,22 @@
 
 .user-data-container__button {
-    
+    border-radius: 2px;
+    border: 1px solid rgb(00, 00, 00);
+    margin: 216px auto 0;
+    padding: 0;
+    min-width: 358px;
+    cursor: pointer;
+    height: 50px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.user-data-container__button:hover {
+    opacity: 0.8;
+    transition: opacity 0.5s;
+
 }
