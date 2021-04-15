@@ -82,4 +82,9 @@
 @import url('./blocks/user-data-container/__title/user-data-container__title.css');
 @import url('./blocks/user-data-container/__link/user-data-container__link.css');
 
+@import url('./blocks/not-found/not-found.css');
+@import url('./blocks/not-found/__button/not-found__button.css');
+@import url('./blocks/not-found/__image/not-found__image.css');
+@import url('./blocks/not-found/__title/not-found__title.css');
+
 

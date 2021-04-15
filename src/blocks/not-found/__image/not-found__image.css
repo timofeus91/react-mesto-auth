@@ -1,0 +1,8 @@
+
+.not-found__image {
+    object-fit: cover;
+    max-width: 50vw;
+    max-height: 50vh;
+    padding: 0;
+    margin: 20px auto 0;
+}

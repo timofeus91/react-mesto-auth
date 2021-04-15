@@ -17,6 +17,7 @@ import Login from './Login';
 import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import * as auth from '../utils/auth';
+import PageNotFound from './PageNotFound';
 
 
 
@@ -37,7 +38,7 @@ function App() {
     const [cards, setCards] = React.useState([]);
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [email, setEmail] = React.useState('');
-    const [checkRegistration, setCheckRegistration] = React.useState('');
+    const [isAuthReqSuccess, setIsAuthReqSuccess] = React.useState(false);
     const history = useHistory();
 
 
@@ -66,13 +67,7 @@ function App() {
             console.log(`Произошла ошибка - ${err}`);
         })
     }, []);
-    //эффект для проверки токена при загрузке сайта
-    React.useEffect(() => {
-        handleTokenCheck();
-        /*если ставить зависимость [] чтобы проверялось только при загрузке, то вылетает ошибка:
-        Line 67:8:  React Hook React.useEffect has a missing dependency: 'handleTokenCheck'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
-        Разобраться в чем проблема!!! */
-    });
+    
 
     //обработчки для открытия попапов
 
@@ -128,7 +123,6 @@ function App() {
     function handleCardDelete(card) {
         api.deleteCard(card.id)
             .then((deleteCard) => {
-                //console.log(deleteCard);
                 setCards(state => state.filter((c) => c._id === card.id ? null : c));
             })
             .catch((err) => {
@@ -164,11 +158,10 @@ function App() {
 
     //обработчик для добавления новой карточки через api и обновлении страницы
     function handleAddPlace(data) {
-        //console.log(data);
         api.addNewCard(data)
             .then(newCard => {
                 setCards([newCard, ...cards]);
-                closeAllPopups() 
+                closeAllPopups(); 
             })
             .catch((err) => {
                 console.log(`Произошла ошибка - ${err}`);
@@ -180,14 +173,16 @@ function App() {
     function handleRegister(data) {
         auth.register(data)
             .then(() => {
-                handleInfoTooltip();
-                setCheckRegistration(true);
+                
+                setIsAuthReqSuccess(true);
                 history.push('/sign-in');
             })
             .catch((err) => {
                 console.log(`Произошла ошибка - ${err}`);
+                setIsAuthReqSuccess(false);
+            })
+            .finally(() => {
                 handleInfoTooltip();
-                setCheckRegistration(false);
             })
     }
 
@@ -203,13 +198,12 @@ function App() {
             .catch((err) => {
                 console.log(`Произошла ошибка - ${err}`);
                 handleInfoTooltip();
-                setCheckRegistration(false);
+                setIsAuthReqSuccess(false);
             })
     }
 
-    //функция по проверке токена
-    function handleTokenCheck() {
-        if(localStorage.getItem('jwt')) {
+    //эффект по проверке токена
+    React.useEffect(() => { 
             const token = localStorage.getItem('jwt');
             if(token) {
                 auth.checkToken(token)
@@ -224,8 +218,9 @@ function App() {
                         console.log(`Произошла ошибка - ${err}`);
                     })
             }
-        }
-    }
+        
+    }, []);
+    
 
 
     //обработчик по выходу из аккаунта
@@ -233,7 +228,8 @@ function App() {
         setLoggedIn(false);
         setEmail('');
         localStorage.removeItem('jwt');
-        <Redirect to="sign-in" />
+        history.push('/sign-in');
+        
     }
 
 
@@ -260,12 +256,26 @@ function App() {
              onCardDelete={handleCardDelete}
              />
 
-             <Route path="/sign-up">
+             <Route path="/sign-up">{
+                 loggedIn
+                 ?
+                 <Redirect to='/' />
+                 :
                <Register onData={handleRegister} />
+             }
              </Route>
 
              <Route path="/sign-in">
+                 { loggedIn 
+                 ?
+                  <Redirect to='/' />
+                 :
                <Login onData={handleLogin} />
+                 }
+             </Route>
+
+             <Route path='*'>
+                 <PageNotFound />
              </Route>
 
         </Switch>
@@ -277,7 +287,7 @@ function App() {
             <InfoTooltip
             onClose={closeAllPopups}
             isOpen={isInfoTooltip}
-            checkRegistration={checkRegistration}
+            isAuthReqSuccess={isAuthReqSuccess}
             name='registration'
             />
 

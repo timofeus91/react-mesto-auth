@@ -1,0 +1,19 @@
+
+.not-found__button {
+        padding: 0;
+        margin: 30px auto 0;
+        cursor: pointer;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 22px;
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+    }
+    
+    .not-found__button:hover {
+        opacity: 0.6;
+        transition: opacity 0.5s;
+    
+    
+}

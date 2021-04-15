@@ -22,13 +22,13 @@ function Login(props) {
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик
         props.onData({
-            email: email,
-            password: password,
+            email,
+            password,
         });
     }
 
     return(
-        (
+        
         <div className="user-data-container page__user-data-container">
             <h2 className="user-data-container__title">Вход</h2>
             <form className="user-data-container__form" onSubmit={handleSubmit} name="user-data" noValidate>
@@ -42,7 +42,7 @@ function Login(props) {
                 <button className="user-data-container__button" type='submit'>Войти</button>
             </form>
         </div>
-    )
+    
     )
     
 }

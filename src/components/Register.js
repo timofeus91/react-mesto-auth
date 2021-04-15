@@ -23,14 +23,14 @@ function Register(props) {
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик
         props.onData({
-            email: email,
-            password: password,
+            email,
+            password,
         });
     }
 
 
     return(
-        (
+        
         <div className="user-data-container page__user-data-container">
             <h2 className="user-data-container__title">Регистрация</h2>
             <form className="user-data-container__form" onSubmit={handleSubmit} name="user-data" noValidate>
@@ -45,7 +45,7 @@ function Register(props) {
             </form>
             <Link className="user-data-container__link"  to="/sign-in">Уже зарегистрированы? Войти</Link>
         </div>
-    )
+    
     )
 }
 
