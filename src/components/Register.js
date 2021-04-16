@@ -22,7 +22,7 @@ function Register(props) {
         // Запрещаем браузеру переходить по адресу формы
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик
-        props.onData({
+        props.onRegister({
             email,
             password,
         });

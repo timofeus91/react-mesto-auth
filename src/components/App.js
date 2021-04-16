@@ -145,7 +145,6 @@ function App() {
 
     //обработчик для отправки через api данных о новом аватаре и обновлении страницы
     function handleUpdateAvatar(avatar) {
-        console.log(avatar);
         api.editUserAvatar(avatar)
             .then(avatar => {
                 setCurrentUser(avatar)
@@ -261,7 +260,7 @@ function App() {
                  ?
                  <Redirect to='/' />
                  :
-               <Register onData={handleRegister} />
+               <Register onRegister={handleRegister} />
              }
              </Route>
 
@@ -270,7 +269,7 @@ function App() {
                  ?
                   <Redirect to='/' />
                  :
-               <Login onData={handleLogin} />
+               <Login onLogin={handleLogin} />
                  }
              </Route>
 

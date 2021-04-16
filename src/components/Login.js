@@ -21,7 +21,7 @@ function Login(props) {
         // Запрещаем браузеру переходить по адресу формы
         e.preventDefault();
         // Передаём значения управляемых компонентов во внешний обработчик
-        props.onData({
+        props.onLogin({
             email,
             password,
         });
