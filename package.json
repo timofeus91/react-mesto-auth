@@ -2,7 +2,7 @@
   "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://frontend.timofeus91.nomoredomains.icu",
+  "homepage": "https://timofeus91.github.io/react-mesto-auth",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
@@ -18,8 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* praktikum@84.201.158.88:/home/timofeus91/mesto-frontend"
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
