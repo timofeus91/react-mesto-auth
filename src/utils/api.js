@@ -117,10 +117,9 @@
 
 
 const api = new Api({
-    url: "https://mesto.nomoreparties.co/v1/cohort-20/", 
+    url: "https://api.frontend.timofeus91.nomoredomains.icu/", 
     headers: {
         "content-type": "application/json",
-        "Authorization": "43c52a6d-19a6-461e-b067-2db5e03ba70b",
     }
 });
 
